@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Service</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<style>
+
+    .read-box{
+        width:800px;
+        height : 650px;
+        border : 1px solid;
+        margin : 50px auto 0 auto;
+        text-align: center;
+        background-color: #FDD7A0;
+    }
+
+    .read-contents {
+        border : 1px solid;
+        width : 600px;
+        height : 350px;
+        text-align: center;
+        margin:auto;
+    }
+
+</style>
+
+<script>
+
+    $(document).ready(function () {
+        // HTML 문서를 로드할 때마다 실행합니다.
+        getDetails();
+    })
+
+
+    function getDetails() {
+        let id = localStorage.getItem('id');
+        // let username = localStorage.getItem('username');
+        // let title = localStorage.getItem('title');
+        // let contents = localStorage.getItem('contents');
+        // let modifiedAt = localStorage.getItem('modifiedAt');
+        //
+        // console.log(localStorage.getItem('id'));
+        // console.log(localStorage.getItem('username'))
+        // console.log(localStorage.getItem('title'))
+        // console.log(localStorage.getItem('contents'))
+        // console.log(localStorage.getItem('modifiedAt'))
+        //
+        // const username1 = document.getElementById('read-box-username');
+        // username1.innerHTML = `${username}`;
+        //
+        // const title1 = document.getElementById('read-box-title');
+        // title1.innerHTML = `<div> ${title}<div>`;
+        //
+        // const contents1 = document.getElementById('read-box-contents');
+        // contents1.innerHTML = `<div>${contents}<div>`;
+        //
+        // const modifiedAt1 = document.getElementById('read-box-modifiedAt');
+        // modifiedAt1.innerHTML = `${modifiedAt}`;
+
+        $.ajax({
+            type: 'GET',
+            url: `/api/memos/${id}`,
+            success: function (response) {
+                console.log("check2");
+                let message = response;
+                let id = message['id'];
+                let username = message['username'];
+                let contents = message['contents'];
+                let title = message['title'];
+                let modifiedAt = message['modifiedAt'];
+
+                const username1 = document.getElementById('read-box-username');
+                username1.innerHTML = `<div style="color:blue">작성자: ${username}</div>`;
+
+                const title1 = document.getElementById('read-box-title');
+                title1.innerHTML = `<div style="color:orangered"> 제목: ${title}<div>`;
+
+                const contents1 = document.getElementById('read-box-contents');
+                contents1.innerHTML = `<div>${contents}<div>`;
+
+                const modifiedAt1 = document.getElementById('read-box-modifiedAt');
+                modifiedAt1.innerHTML = `<div style="color:gray">작성 시간: ${modifiedAt}</div>`;
+
+            }
+        })
+
+
+
+    }
+
+
+</script>
+
+<body>
+<div class="read-box" id="read-box">
+    <h1>
+        상세 페이지 큰 공간
+    </h1>
+
+    <p id="read-box-username">여기에 작성자 이름</p>
+    <p id="read-box-modifiedAt">여기에 수정시간</p>
+    <p id="read-box-title">여기에 타이틀</p>
+    <div class="read-contents" id="read-box-contents">여기에 해당 내용</div>
+    <br>
+    <div>
+        <button class="mybtn" onClick="location.href='index.html'">돌아가기</button>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
